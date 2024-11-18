@@ -35,6 +35,11 @@ class RefundRequest extends RequestBody implements RequestBodyInterface
     private $checkoutData;
 
     /**
+     * @var string
+     */
+    private $refundOrderId;
+
+    /**
      * @return array
      * @throws InvalidArgumentException
      */
@@ -46,6 +51,7 @@ class RefundRequest extends RequestBody implements RequestBodyInterface
                 'amount' => $this->money ? (int)round($this->money->getAmount()) : null,
                 'description' => $this->description ? $this->description->getData() : null,
                 'checkout_data' => $this->checkoutData ? $this->checkoutData->getData() : null,
+                'refund_order_id' => $this->refundOrderId ? $this->refundOrderId : null,
             ],
             $this->data
         ));
@@ -88,6 +94,16 @@ class RefundRequest extends RequestBody implements RequestBodyInterface
     public function addCheckoutData(CheckoutData $checkoutData): RefundRequest
     {
         $this->checkoutData = $checkoutData;
+        return $this;
+    }
+
+    /**
+     * @param string $refundOrderId
+     * @return RefundRequest
+     */
+    public function addRefundOrderId(string $refundOrderId): RefundRequest
+    {
+        $this->refundOrderId = $refundOrderId;
         return $this;
     }
 
